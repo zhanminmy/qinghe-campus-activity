@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>青禾校园活动站——软件工程实践报告</title>
+  <style>
+    *{box-sizing:border-box}body{margin:0;background:#ececec;color:#222;font:16px/1.85 "SimSun","Songti SC",serif}.paper{width:210mm;min-height:297mm;margin:20px auto;padding:23mm 24mm;background:#fff;box-shadow:0 4px 18px #bbb}.cover{min-height:245mm;display:flex;flex-direction:column;justify-content:center;text-align:center}.cover h1{font-size:34px;letter-spacing:.12em}.cover h2{margin-top:45px;font-size:26px}.info{width:70%;margin:75px auto 0;text-align:left}.info div{display:grid;grid-template-columns:100px 1fr;margin:14px 0}.line{border-bottom:1px solid #222;text-align:center}.page{page-break-before:always}h2{margin-top:0;padding-bottom:8px;border-bottom:2px solid #1f6b50;font-size:24px}h3{margin-top:28px;font-size:19px}p{text-align:justify;text-indent:2em}table{width:100%;border-collapse:collapse;margin:14px 0;font-size:14px}th,td{padding:9px;border:1px solid #777;text-align:left;vertical-align:top}th{background:#eef5f1}.structure{padding:15px 22px;background:#f5f5f5;border-left:4px solid #1f6b50;font-family:monospace;white-space:pre-line}.note{padding:12px;background:#fff8e8;border:1px solid #ecd5a4}.signature{margin-top:60px;text-align:right}@page{size:A4;margin:0}@media print{body{background:#fff}.paper{margin:0;box-shadow:none}}
+  </style>
+</head>
+<body>
+  <section class="paper cover">
+    <div>软件工程实践作业</div>
+    <h1>网站设计与开发实践报告</h1>
+    <h2>青禾校园活动站</h2>
+    <div class="info">
+      <div><strong>姓　　名：</strong><span class="line">请填写</span></div>
+      <div><strong>学　　号：</strong><span class="line">请填写</span></div>
+      <div><strong>班　　级：</strong><span class="line">请填写</span></div>
+      <div><strong>指导教师：</strong><span class="line">请填写</span></div>
+      <div><strong>完成日期：</strong><span class="line">2026 年　月　日</span></div>
+    </div>
+  </section>
+
+  <section class="paper page">
+    <h2>一、项目概述</h2>
+    <h3>1.1 项目背景</h3>
+    <p>校园活动是学生拓展兴趣、锻炼能力和建立社会联系的重要途径。实际校园生活中，活动信息常分散在不同通知群、海报或公众号中，学生难以及时获取完整信息。为改善这一问题，本项目设计并实现“青禾校园活动站”，集中展示校园讲座、公益、文体和创新创业活动，并提供分类浏览、详情查看和报名意向登记等功能。</p>
+    <h3>1.2 建设目标</h3>
+    <p>项目目标是完成一个结构合理、可以正常访问、具备一定交互特效且底层代码清晰的校园活动网站。网站同时兼顾电脑和手机端显示效果，通过统一的视觉规范和模块化代码，提高页面的可读性、可维护性与使用体验。</p>
+    <h3>1.3 开发技术</h3>
+    <table><tr><th>技术</th><th>用途</th></tr><tr><td>HTML5</td><td>构建页面语义结构，包括导航、主体、表单和页脚。</td></tr><tr><td>CSS3</td><td>完成网格布局、响应式适配、主题配色、过渡和动画效果。</td></tr><tr><td>JavaScript</td><td>实现轮播、筛选、主题切换、弹窗、表单校验等交互逻辑。</td></tr><tr><td>LocalStorage</td><td>在用户设备上保存深色或浅色主题偏好。</td></tr></table>
+
+    <h2>二、需求分析</h2>
+    <table><tr><th>需求类别</th><th>具体需求</th><th>实现结果</th></tr><tr><td>页面布局</td><td>导航、内容区域和页脚层次清晰</td><td>已实现统一布局和响应式设计</td></tr><tr><td>信息展示</td><td>展示活动名称、时间、地点、类别和详情</td><td>已实现活动列表及动态详情页面</td></tr><tr><td>活动筛选</td><td>根据活动类别快速查找内容</td><td>已实现四类活动筛选及数量统计</td></tr><tr><td>用户交互</td><td>支持报名、留言并检查输入内容</td><td>已实现弹窗、表单校验和成功反馈</td></tr><tr><td>视觉特效</td><td>适量动画增强页面体验</td><td>已实现轮播、渐入、数字增长、悬停效果</td></tr><tr><td>设备兼容</td><td>电脑和手机均可正常浏览</td><td>已使用媒体查询完成响应式适配</td></tr></table>
+  </section>
+
+  <section class="paper page">
+    <h2>三、总体设计</h2>
+    <h3>3.1 页面结构</h3>
+    <table><tr><th>页面</th><th>主要内容</th></tr><tr><td>首页</td><td>推荐活动轮播、网站数据、每周精选和平台简介。</td></tr><tr><td>活动中心</td><td>六项活动信息、类别筛选、活动数量实时反馈。</td></tr><tr><td>活动详情</td><td>活动介绍、流程、须知、时间地点和报名入口。</td></tr><tr><td>关于我们</td><td>平台价值、联系信息和留言表单。</td></tr></table>
+    <h3>3.2 文件结构</h3>
+    <div class="structure">campus-activity/
+├── index.html　　　　　　首页
+├── activities.html　　　活动中心
+├── detail.html　　　　　活动详情
+├── about.html　　　　　 关于我们
+├── css/
+│　└── common.css　　　　公共样式与响应式规则
+├── js/
+│　└── main.js　　　　　公共交互逻辑与活动数据
+├── README.txt　　　　　运行与提交说明
+└── report.html　　　　　本实践报告</div>
+    <p>本项目采用结构、表现和行为分离的组织方式。HTML 文件负责内容与语义结构，CSS 文件负责全站视觉和响应式适配，JavaScript 文件集中管理公共交互及活动数据，避免在页面中重复编写逻辑。</p>
+    <h3>3.3 视觉设计</h3>
+    <p>网站以自然绿色和活力橙色作为主色，绿色体现成长、连接和校园氛围，橙色用于突出按钮和重要信息。页面使用卡片、留白和圆角建立清晰的信息层级，并提供深色主题以适应不同浏览环境。</p>
+
+    <h2>四、关键功能实现</h2>
+    <h3>4.1 轮播与滚动动画</h3>
+    <p>首页轮播通过数组索引控制当前显示内容，支持自动播放、上一张、下一张及圆点切换。滚动渐入使用 IntersectionObserver 监听页面元素进入可视区域，在满足条件时添加样式类，从而降低不必要的滚动计算。</p>
+    <h3>4.2 活动分类筛选</h3>
+    <p>每个活动元素使用 data-category 属性标记类别。当用户点击筛选按钮时，脚本对类别进行比较，显示符合条件的活动，同时更新页面中的结果数量。该方案代码简洁，增加新类别时也容易扩展。</p>
+    <h3>4.3 动态详情与表单验证</h3>
+    <p>活动详情页读取网址中的 id 参数，并从 JavaScript 数据对象中加载对应内容，实现一个页面展示多项活动。报名和留言表单会检查必填项、邮箱格式及手机号码格式，验证通过后显示成功反馈。该项目为前端演示，不会向服务器上传真实信息。</p>
+  </section>
+
+  <section class="paper page">
+    <h2>五、测试记录</h2>
+    <table><tr><th>编号</th><th>测试内容</th><th>预期结果</th><th>结果</th></tr><tr><td>01</td><td>点击主导航</td><td>正确进入对应页面</td><td>通过</td></tr><tr><td>02</td><td>切换首页轮播</td><td>内容平滑切换，按钮可用</td><td>通过</td></tr><tr><td>03</td><td>选择不同活动分类</td><td>仅显示对应活动并更新数量</td><td>通过</td></tr><tr><td>04</td><td>打开不同活动详情</td><td>标题、日期、地点等信息正确变化</td><td>通过</td></tr><tr><td>05</td><td>提交空白报名表单</td><td>提示必填项，不进入成功状态</td><td>通过</td></tr><tr><td>06</td><td>填写错误手机号或邮箱</td><td>显示对应格式错误提示</td><td>通过</td></tr><tr><td>07</td><td>切换深色主题并刷新</td><td>主题状态被保留</td><td>通过</td></tr><tr><td>08</td><td>缩小浏览器至手机宽度</td><td>导航折叠，内容单列显示</td><td>通过</td></tr></table>
+
+    <h2>六、项目总结</h2>
+    <p>通过本次实践，我完成了从需求分析、页面规划、视觉设计、代码实现到功能测试的完整网站开发过程。项目实现了多页面导航、响应式布局和多种交互功能，也让我进一步理解了 HTML、CSS 与 JavaScript 的职责划分。开发过程中，我重点关注代码复用和结构清晰，将公共样式与交互逻辑集中管理，并通过语义标签、键盘操作支持和减少动画偏好适配提升网站可访问性。</p>
+    <p>目前项目使用静态数据，适合作为前端网站实践作品。后续可以增加数据库和用户登录功能，将报名信息保存至后台，并加入管理端活动发布、报名审核和数据统计等模块，使网站形成完整的校园活动服务系统。</p>
+    <div class="note"><strong>提交前提醒：</strong>请返回报告封面填写姓名、学号、班级、指导教师和完成日期。浏览器中按 Ctrl+P（macOS 为 Command+P）可将本报告另存为 PDF。</div>
+    <div class="signature">学生签名：____________　　日期：____年__月__日</div>
+  </section>
+</body>
+</html>

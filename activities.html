@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="浏览和筛选青禾校园近期活动。"><title>活动中心｜青禾校园</title>
+  <style>
+/* 青禾校园活动站：全站公共样式 */
+:root {
+  --bg: #f7f6f1; --surface: #ffffff; --text: #18211b; --muted: #667069;
+  --line: #dfe4df; --primary: #f05b32; --primary-dark: #d94722; --green: #1f6b50;
+  --deep: #102d24; --shadow: 0 18px 50px rgba(20, 47, 38, .10);
+  --radius: 24px; --container: 1160px;
+}
+[data-theme="dark"] { --bg:#101713; --surface:#18221d; --text:#f3f5f2; --muted:#abb7af; --line:#304039; --deep:#09110d; --shadow:0 20px 50px rgba(0,0,0,.28); }
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body { margin:0; color:var(--text); background:var(--bg); font-family:"PingFang SC","Microsoft YaHei",system-ui,sans-serif; line-height:1.7; transition:background .3s,color .3s; }
+a { color:inherit; text-decoration:none; }
+button,input,select,textarea { font:inherit; }
+button { cursor:pointer; }
+.container { width:min(var(--container), calc(100% - 40px)); margin-inline:auto; }
+.site-header { position:sticky; top:0; z-index:50; background:color-mix(in srgb,var(--bg) 88%,transparent); backdrop-filter:blur(16px); border-bottom:1px solid transparent; transition:.3s; }
+.site-header.scrolled { border-color:var(--line); box-shadow:0 8px 24px rgba(0,0,0,.05); }
+.nav-wrap { height:76px; display:flex; align-items:center; gap:36px; }
+.brand { display:inline-flex; align-items:center; gap:10px; font-size:20px; font-weight:800; letter-spacing:.04em; }
+.brand-mark { display:grid; place-items:center; width:38px; height:38px; color:#fff; background:var(--green); border-radius:14px 14px 14px 4px; font-size:17px; }
+.site-nav { display:flex; gap:32px; margin-left:auto; }
+.site-nav a { position:relative; padding:8px 0; color:var(--muted); font-weight:600; }
+.site-nav a::after { content:""; position:absolute; left:50%; bottom:0; width:0; height:2px; background:var(--primary); transition:.3s; transform:translateX(-50%); }
+.site-nav a:hover,.site-nav a.active { color:var(--text); }
+.site-nav a:hover::after,.site-nav a.active::after { width:100%; }
+.theme-toggle,.menu-toggle { border:1px solid var(--line); background:var(--surface); color:var(--text); border-radius:50%; width:42px; height:42px; }
+.menu-toggle { display:none; width:auto; border-radius:12px; padding:0 14px; }
+.hero { overflow:hidden; padding:48px 0 22px; }
+.carousel { position:relative; min-height:570px; }
+.slide { display:none; grid-template-columns:1.08fr .92fr; align-items:center; gap:64px; min-height:520px; animation:fadeSlide .65s ease both; }
+.slide.is-active { display:grid; }
+@keyframes fadeSlide { from{opacity:0;transform:translateY(12px)} to{opacity:1;transform:none} }
+.eyebrow { color:var(--primary); font-size:12px; font-weight:800; letter-spacing:.18em; text-transform:uppercase; }
+.hero h1,.page-hero h1,.detail-hero h1 { margin:20px 0; font-family:Georgia,"Songti SC",serif; font-size:clamp(46px,6vw,78px); line-height:1.13; letter-spacing:-.045em; }
+.hero h1 em { color:var(--primary); font-style:normal; }
+.hero-copy>p { max-width:620px; color:var(--muted); font-size:18px; }
+.hero-actions { display:flex; align-items:center; flex-wrap:wrap; gap:26px; margin-top:34px; }
+.button { display:inline-flex; justify-content:center; align-items:center; min-height:50px; padding:0 25px; border:0; border-radius:14px; font-weight:700; transition:transform .2s,box-shadow .2s,background .2s; }
+.button:hover { transform:translateY(-2px); }
+.button.primary { color:#fff; background:var(--primary); box-shadow:0 12px 26px rgba(240,91,50,.25); }
+.button.primary:hover { background:var(--primary-dark); }
+.button.secondary { background:var(--surface); border:1px solid var(--line); }
+.button.full { width:100%; }
+.text-link { font-weight:700; border-bottom:1px solid var(--text); }
+.hero-art { position:relative; min-height:440px; overflow:hidden; border-radius:48% 48% 18% 48%; background:#e3c9fa; box-shadow:var(--shadow); }
+.art-orange { background:linear-gradient(135deg,#ffc6a4,#f07043); }
+.art-green { background:linear-gradient(135deg,#c5e6c7,#3e8b65); }
+.art-blue { background:linear-gradient(135deg,#bed9ff,#5674c5); }
+.hero-art::before { content:""; position:absolute; width:220px; height:220px; left:20%; top:18%; border:50px solid rgba(255,255,255,.38); border-radius:50%; }
+.art-card { position:absolute; z-index:2; right:30px; bottom:35px; display:flex; flex-direction:column; width:190px; padding:25px; color:#fff; background:rgba(16,45,36,.88); border:1px solid rgba(255,255,255,.3); border-radius:22px; backdrop-filter:blur(8px); }
+.art-card strong { font:700 48px/1 Georgia,serif; }
+.art-card span { margin-top:8px; font-size:13px; }
+.orbit { position:absolute; border:1px solid rgba(255,255,255,.7); border-radius:50%; }
+.orbit-one { width:330px;height:330px;left:-60px;top:-90px; }.orbit-two{width:110px;height:110px;right:30px;top:40px}
+.leaf { position:absolute; width:130px;height:230px;background:rgba(255,255,255,.25);border-radius:100% 0 100% 0;transform:rotate(25deg)}
+.leaf-one{left:45px;bottom:-50px}.leaf-two{right:50px;top:20px;transform:rotate(195deg) scale(.65)}
+.spark { position:absolute; color:#fff; font-size:80px; opacity:.7; }.spark-one{left:50px;top:70px}.spark-two{right:55px;top:160px;font-size:40px}
+.carousel-controls { position:absolute; left:0; bottom:0; display:flex; align-items:center; gap:16px; }
+.carousel-controls button { width:40px;height:40px;border:1px solid var(--line);border-radius:50%;color:var(--text);background:var(--surface); }
+.dots { display:flex; gap:8px; }.dots button{width:8px;height:8px;padding:0;border:0;background:#b2b9b4}.dots button.active{width:28px;border-radius:8px;background:var(--primary)}
+.quick-stats { margin-top:20px; background:var(--deep); color:#fff; }
+.stats-grid { display:grid; grid-template-columns:repeat(4,1fr); padding:28px 0; }
+.stats-grid div { display:flex; align-items:baseline; justify-content:center; gap:10px; border-right:1px solid rgba(255,255,255,.15); }
+.stats-grid div:last-child { border:0; }.stats-grid strong{font:700 32px Georgia,serif}.stats-grid span{color:#b6c9c1;font-size:14px}
+.section { padding-top:110px; padding-bottom:110px; }
+.section-heading { display:flex; justify-content:space-between; align-items:end; gap:30px; margin-bottom:42px; }
+.section-heading h2,.story-copy h2,.contact-copy h2 { margin:10px 0 0; font:700 clamp(34px,4vw,54px)/1.2 Georgia,"Songti SC",serif; letter-spacing:-.03em; }
+.card-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:24px; }
+.activity-card { overflow:hidden; background:var(--surface); border:1px solid var(--line); border-radius:var(--radius); transition:.3s; }
+.activity-card:hover { transform:translateY(-8px); box-shadow:var(--shadow); }
+.card-visual { position:relative; display:flex; justify-content:space-between; align-items:start; min-height:210px; padding:26px; overflow:hidden; color:#fff; }
+.card-visual::after { content:""; position:absolute; width:180px;height:180px;right:-35px;bottom:-70px;border:35px solid rgba(255,255,255,.24);border-radius:50%; }
+.card-visual span{padding:5px 12px;border:1px solid rgba(255,255,255,.5);border-radius:20px;font-size:13px}.card-visual b{font:700 72px/1 Georgia,serif;opacity:.8}
+.visual-purple{background:#7253a7}.visual-green{background:#34745a}.visual-orange{background:#d85e32}
+.card-body{padding:27px}.card-body .meta{color:var(--primary);font-size:13px;font-weight:700}.card-body h3{margin:8px 0;font-size:22px}.card-body>p:not(.meta){color:var(--muted);font-size:15px}.card-body a{display:flex;justify-content:space-between;margin-top:20px;font-weight:700}
+.story-section { background:color-mix(in srgb,var(--green) 8%,var(--bg)); }
+.story-grid { display:grid;grid-template-columns:.9fr 1.1fr;gap:90px;align-items:center}.story-art{display:grid;place-items:center;min-height:480px;color:#fff;background:var(--green);border-radius:50% 50% 12% 50%;text-align:center}.story-number{font:700 140px/1 Georgia,serif}.story-art p{margin:0}.story-copy>p{color:var(--muted);font-size:17px}
+.check-list{padding:0;list-style:none}.check-list li{position:relative;padding:8px 0 8px 32px}.check-list li::before{content:"✓";position:absolute;left:0;color:var(--green);font-weight:800}
+.page-hero { padding:105px 0 90px; background:linear-gradient(125deg,color-mix(in srgb,var(--green) 12%,var(--bg)),var(--bg)); }
+.page-hero h1 { max-width:850px; margin-bottom:14px; font-size:clamp(44px,6vw,72px); }.page-hero h1 span{color:var(--primary)}.page-hero p{max-width:650px;color:var(--muted);font-size:18px}
+.filter-bar { display:flex;flex-wrap:wrap;gap:10px;margin-bottom:24px}.filter-button{padding:10px 18px;border:1px solid var(--line);border-radius:24px;color:var(--muted);background:var(--surface);font-weight:600}.filter-button:hover,.filter-button.active{border-color:var(--green);color:#fff;background:var(--green)}
+.result-count{color:var(--muted);margin:0 0 28px}.activity-list{display:grid;gap:16px}.list-card{display:grid;grid-template-columns:110px 1fr 54px;gap:28px;align-items:center;padding:28px;background:var(--surface);border:1px solid var(--line);border-radius:20px;transition:.3s}.list-card:hover{border-color:var(--primary);transform:translateX(5px);box-shadow:var(--shadow)}.list-card.is-hidden{display:none}.date-block{display:flex;flex-direction:column;align-items:center;padding-right:25px;border-right:1px solid var(--line)}.date-block strong{font:700 48px/1 Georgia,serif}.date-block span{color:var(--primary);font-size:12px;font-weight:800;letter-spacing:.15em}.tag-row{display:flex;align-items:center;gap:12px;color:var(--muted);font-size:13px}.tag{padding:4px 10px;border-radius:20px;color:#fff;font-size:12px;font-weight:700}.tag.purple{background:#7253a7}.tag.green{background:#34745a}.tag.blue{background:#476b9f}.tag.orange{background:#d85e32}.list-main h2{margin:8px 0 4px;font-size:23px}.list-main>p{margin:0;color:var(--muted);font-size:14px}.event-info{display:flex;gap:22px;margin-top:13px;color:var(--muted);font-size:13px}.circle-link{display:grid;place-items:center;width:48px;height:48px;border:1px solid var(--line);border-radius:50%;font-size:20px;transition:.2s}.circle-link:hover{color:#fff;background:var(--primary);border-color:var(--primary)}
+.detail-hero{padding:75px 0;background:var(--deep);color:#fff}.back-link{display:inline-block;margin-bottom:48px;color:#b6c9c1}.detail-hero-grid{display:grid;grid-template-columns:1fr auto;gap:50px;align-items:end}.detail-hero h1{margin:18px 0 12px;max-width:800px;font-size:clamp(44px,6vw,72px)}.detail-hero p{color:#c4d3cd;font-size:19px}.detail-date{display:flex;flex-direction:column;min-width:180px;padding-left:40px;border-left:1px solid rgba(255,255,255,.22)}.detail-date strong{font:700 80px/1 Georgia,serif}.detail-date span{margin-top:10px;color:#c4d3cd;font-size:13px;letter-spacing:.12em}
+.detail-layout{display:grid;grid-template-columns:1fr 350px;gap:80px;align-items:start}.detail-content h2{margin:0 0 14px;padding-top:34px;font-size:27px}.detail-content h2:first-child{padding-top:0}.detail-content>p{color:var(--muted);font-size:17px}.quote-box{margin:30px 0;padding:28px;border-left:4px solid var(--primary);background:var(--surface);font:italic 21px/1.7 Georgia,"Songti SC",serif}.timeline{padding:0;list-style:none}.timeline li{display:grid;grid-template-columns:90px 1fr;gap:20px;position:relative;padding:0 0 28px}.timeline li::after{content:"";position:absolute;left:78px;top:30px;bottom:0;border-left:1px dashed var(--line)}.timeline li>span{color:var(--primary);font-weight:800}.timeline p{margin:3px 0;color:var(--muted)}.signup-card{position:sticky;top:105px;padding:30px;background:var(--surface);border:1px solid var(--line);border-radius:24px;box-shadow:var(--shadow)}.signup-card h2{margin-top:0}.signup-card dl{margin:0 0 25px}.signup-card dl div{padding:14px 0;border-bottom:1px solid var(--line)}.signup-card dt{color:var(--muted);font-size:13px}.signup-card dd{margin:3px 0 0;font-weight:650}.signup-card small{display:block;margin-top:14px;color:var(--muted);text-align:center}
+.modal[hidden]{display:none}.modal{position:fixed;inset:0;z-index:100;display:grid;place-items:center;padding:20px;background:rgba(8,17,13,.72);backdrop-filter:blur(6px)}.modal-panel{position:relative;width:min(520px,100%);max-height:90vh;overflow:auto;padding:38px;background:var(--surface);border-radius:24px;box-shadow:0 30px 80px rgba(0,0,0,.35)}.modal-close{position:absolute;right:18px;top:18px;width:38px;height:38px;border:0;border-radius:50%;color:var(--text);background:var(--bg);font-size:24px}.modal-panel h2{margin:8px 0}.modal-panel>p{color:var(--muted)}label{display:block;margin:16px 0 0;font-weight:650}input,select,textarea{width:100%;margin-top:7px;padding:12px 14px;color:var(--text);background:var(--bg);border:1px solid var(--line);border-radius:11px;outline:none}input:focus,select:focus,textarea:focus{border-color:var(--primary);box-shadow:0 0 0 3px rgba(240,91,50,.12)}.modal form .button{margin-top:22px}.consent{display:flex;align-items:start;gap:8px;font-size:14px;font-weight:400}.consent input{width:auto;margin-top:6px}.error{display:block;min-height:18px;color:#d94343;font-size:12px;font-weight:400}.success-state{text-align:center}.success-icon{display:grid;place-items:center;width:70px;height:70px;margin:12px auto;color:#fff;background:var(--green);border-radius:50%;font-size:34px}
+.value-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:22px}.value-card{padding:36px;background:var(--surface);border:1px solid var(--line);border-radius:24px}.value-card.featured{color:#fff;background:var(--green);transform:translateY(-15px)}.value-card>span{font:700 48px Georgia,serif;color:var(--primary)}.value-card h3{font-size:24px}.value-card p{color:var(--muted)}.value-card.featured p{color:#cbded6}.contact-section{background:var(--deep);color:#fff}.contact-grid{display:grid;grid-template-columns:.8fr 1.2fr;gap:90px;align-items:start}.contact-copy>p{color:#b6c9c1}.contact-item{display:flex;flex-direction:column;margin-top:20px}.contact-item span{color:#b6c9c1}.contact-form{padding:36px;color:var(--text);background:var(--surface);border-radius:24px}.form-row{display:grid;grid-template-columns:1fr 1fr;gap:18px}.form-notice{min-height:24px;margin:14px 0 0;color:var(--green);font-weight:700}
+.site-footer{padding:65px 0 20px;color:#c9d7d0;background:#0c211a}.footer-grid{display:grid;grid-template-columns:2fr 1fr 1.3fr;gap:60px}.footer-grid>div{display:flex;flex-direction:column;align-items:start;gap:8px}.footer-grid p,.footer-grid span,.footer-grid a:not(.brand){color:#9eb0a8;font-size:14px}.footer-brand{color:#fff}.copyright{margin-top:45px;padding-top:18px;border-top:1px solid rgba(255,255,255,.12);color:#7e948a;font-size:12px}.back-top{position:fixed;right:24px;bottom:24px;z-index:40;width:46px;height:46px;border:0;border-radius:50%;color:#fff;background:var(--primary);box-shadow:0 10px 25px rgba(0,0,0,.2);opacity:0;pointer-events:none;transform:translateY(10px);transition:.3s}.back-top.show{opacity:1;pointer-events:auto;transform:none}.reveal{opacity:0;transform:translateY(28px);transition:opacity .7s,transform .7s}.reveal.visible{opacity:1;transform:none}
+@media (max-width:900px){.slide{grid-template-columns:1fr;gap:30px}.hero-art{min-height:320px}.carousel{min-height:830px}.carousel-controls{bottom:8px}.card-grid,.value-grid{grid-template-columns:1fr 1fr}.story-grid,.contact-grid{grid-template-columns:1fr;gap:45px}.story-art{min-height:360px}.detail-layout{grid-template-columns:1fr;gap:35px}.signup-card{position:static}.footer-grid{grid-template-columns:1.5fr 1fr}.footer-grid>div:last-child{grid-column:1/-1}.value-card.featured{transform:none}}
+@media (max-width:680px){.container{width:min(100% - 28px,var(--container))}.nav-wrap{height:68px}.menu-toggle{display:block;margin-left:auto}.theme-toggle{width:38px;height:38px}.site-nav{position:absolute;left:14px;right:14px;top:68px;display:none;flex-direction:column;gap:4px;padding:14px;background:var(--surface);border:1px solid var(--line);border-radius:16px;box-shadow:var(--shadow)}.site-nav.open{display:flex}.site-nav a{padding:11px 12px}.site-nav a::after{display:none}.hero{padding-top:25px}.hero h1{font-size:43px}.hero-art{min-height:285px}.carousel{min-height:770px}.stats-grid{grid-template-columns:1fr 1fr;gap:20px}.stats-grid div:nth-child(2){border:0}.card-grid,.value-grid{grid-template-columns:1fr}.section{padding-top:75px;padding-bottom:75px}.section-heading{align-items:start;flex-direction:column}.list-card{grid-template-columns:70px 1fr;padding:20px;gap:15px}.date-block{padding-right:14px}.date-block strong{font-size:38px}.circle-link{display:none}.event-info{flex-direction:column;gap:2px}.detail-hero-grid{grid-template-columns:1fr}.detail-date{padding:0;border:0;flex-direction:row;align-items:baseline;gap:10px}.detail-date strong{font-size:58px}.detail-layout{padding-top:70px}.form-row{grid-template-columns:1fr;gap:0}.contact-form{padding:24px}.footer-grid{grid-template-columns:1fr;gap:32px}.footer-grid>div:last-child{grid-column:auto}.story-number{font-size:105px}}
+@media (prefers-reduced-motion:reduce){*,*::before,*::after{scroll-behavior:auto!important;transition:none!important;animation:none!important}.reveal{opacity:1;transform:none}}
+
+</style>
+</head>
+<body data-page="activities">
+  <header class="site-header"><div class="container nav-wrap"><a class="brand" href="index.html"><span class="brand-mark">青</span><span>青禾校园</span></a><button class="menu-toggle" type="button" aria-expanded="false" aria-controls="site-nav">菜单</button><nav id="site-nav" class="site-nav"><a href="index.html">首页</a><a class="active" href="activities.html">活动中心</a><a href="about.html">关于我们</a></nav><button class="theme-toggle" type="button" aria-label="切换主题">◐</button></div></header>
+  <main>
+    <section class="page-hero"><div class="container"><span class="eyebrow">ACTIVITY CENTER</span><h1>找到你的下一场<span>心动活动</span></h1><p>从知识讲座到公益实践，让兴趣成为认识世界的新入口。</p></div></section>
+    <section class="section container">
+      <div class="filter-bar reveal" aria-label="活动筛选"><button class="filter-button active" type="button" data-filter="all">全部活动</button><button class="filter-button" type="button" data-filter="lecture">知识讲座</button><button class="filter-button" type="button" data-filter="volunteer">公益实践</button><button class="filter-button" type="button" data-filter="culture">文体生活</button><button class="filter-button" type="button" data-filter="innovation">创新创业</button></div>
+      <p class="result-count" aria-live="polite">共找到 <strong id="activity-count">6</strong> 场活动</p>
+      <div class="activity-list" id="activity-list">
+        <article class="list-card reveal" data-category="lecture"><div class="date-block"><strong>18</strong><span>JUL</span></div><div class="list-main"><div class="tag-row"><span class="tag purple">知识讲座</span><span>剩余 36 个名额</span></div><h2>与人工智能共创未来</h2><p>行业导师带你理解生成式人工智能，并分享高效学习与职业规划方法。</p><div class="event-info"><span>◷ 19:00–20:30</span><span>⌖ 图书馆报告厅</span></div></div><a class="circle-link" href="detail.html?id=ai" aria-label="查看与人工智能共创未来详情">→</a></article>
+        <article class="list-card reveal" data-category="volunteer"><div class="date-block"><strong>20</strong><span>JUL</span></div><div class="list-main"><div class="tag-row"><span class="tag green">公益实践</span><span>需自备饮用水</span></div><h2>夏日净滩志愿行动</h2><p>清理水岸垃圾、记录环境数据，在真实行动中践行绿色生活方式。</p><div class="event-info"><span>◷ 08:30–11:30</span><span>⌖ 青禾湖公园</span></div></div><a class="circle-link" href="detail.html?id=volunteer" aria-label="查看夏日净滩志愿行动详情">→</a></article>
+        <article class="list-card reveal" data-category="culture"><div class="date-block"><strong>23</strong><span>JUL</span></div><div class="list-main"><div class="tag-row"><span class="tag blue">文体生活</span><span>自由组队</span></div><h2>仲夏校园音乐会</h2><p>校园乐队、阿卡贝拉与原创音乐同台，在晚风里共享一场青春演出。</p><div class="event-info"><span>◷ 19:30–21:00</span><span>⌖ 青年广场</span></div></div><a class="circle-link" href="detail.html?id=music" aria-label="查看仲夏校园音乐会详情">→</a></article>
+        <article class="list-card reveal" data-category="innovation"><div class="date-block"><strong>26</strong><span>JUL</span></div><div class="list-main"><div class="tag-row"><span class="tag orange">创新创业</span><span>限额 60 人</span></div><h2>48小时校园创客营</h2><p>从用户洞察、方案设计到原型展示，与不同专业的同学完成创意挑战。</p><div class="event-info"><span>◷ 09:00 开营</span><span>⌖ 创客空间</span></div></div><a class="circle-link" href="detail.html?id=maker" aria-label="查看48小时校园创客营详情">→</a></article>
+        <article class="list-card reveal" data-category="lecture"><div class="date-block"><strong>29</strong><span>JUL</span></div><div class="list-main"><div class="tag-row"><span class="tag purple">知识讲座</span><span>线上同步直播</span></div><h2>镜头里的叙事表达</h2><p>从构图、光线到剪辑节奏，学习用手机完成一段有情绪的校园短片。</p><div class="event-info"><span>◷ 14:00–16:00</span><span>⌖ 艺术楼 305</span></div></div><a class="circle-link" href="detail.html?id=film" aria-label="查看镜头里的叙事表达详情">→</a></article>
+        <article class="list-card reveal" data-category="culture"><div class="date-block"><strong>02</strong><span>AUG</span></div><div class="list-main"><div class="tag-row"><span class="tag blue">文体生活</span><span>零基础友好</span></div><h2>夜跑与星空观察</h2><p>完成五公里轻松夜跑后，在天文社指导下认识夏季星空。</p><div class="event-info"><span>◷ 19:00–21:00</span><span>⌖ 东区操场</span></div></div><a class="circle-link" href="detail.html?id=run" aria-label="查看夜跑与星空观察详情">→</a></article>
+      </div>
+    </section>
+  </main>
+  <footer class="site-footer"><div class="container footer-grid"><div><a class="brand footer-brand" href="index.html"><span class="brand-mark">青</span><span>青禾校园</span></a><p>发现热爱，连接同伴，让校园生活更有光。</p></div><div><strong>快速导航</strong><a href="index.html">首页</a><a href="about.html">关于我们</a></div><div><strong>联系我们</strong><span>service@qinghe-campus.example</span><span>学生中心 201 室</span></div></div><div class="container copyright">© 2026 青禾校园活动站 · 软件工程实践作品</div></footer>
+  <button class="back-top" type="button" aria-label="返回页面顶部">↑</button><script>
+/* 青禾校园活动站：公共交互逻辑 */
+(() => {
+  'use strict';
+
+  const qs = (selector, parent = document) => parent.querySelector(selector);
+  const qsa = (selector, parent = document) => [...parent.querySelectorAll(selector)];
+
+  // 导航栏、移动菜单与主题切换
+  const header = qs('.site-header');
+  const menuButton = qs('.menu-toggle');
+  const navigation = qs('.site-nav');
+  const themeButton = qs('.theme-toggle');
+  const storedTheme = localStorage.getItem('qinghe-theme');
+  if (storedTheme) document.documentElement.dataset.theme = storedTheme;
+
+  menuButton?.addEventListener('click', () => {
+    const open = navigation.classList.toggle('open');
+    menuButton.setAttribute('aria-expanded', String(open));
+  });
+  themeButton?.addEventListener('click', () => {
+    const dark = document.documentElement.dataset.theme === 'dark';
+    document.documentElement.dataset.theme = dark ? 'light' : 'dark';
+    localStorage.setItem('qinghe-theme', dark ? 'light' : 'dark');
+  });
+
+  // 滚动渐入、返回顶部与页头状态
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(entry => entry.isIntersecting && entry.target.classList.add('visible'));
+  }, { threshold: 0.12 });
+  qsa('.reveal').forEach(element => observer.observe(element));
+  const backTop = qs('.back-top');
+  const handleScroll = () => {
+    header?.classList.toggle('scrolled', window.scrollY > 12);
+    backTop?.classList.toggle('show', window.scrollY > 500);
+  };
+  window.addEventListener('scroll', handleScroll, { passive: true });
+  backTop?.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+  handleScroll();
+
+  // 首页轮播
+  const carousel = qs('[data-carousel]');
+  if (carousel) {
+    const slides = qsa('[data-slide]', carousel);
+    const dotsBox = qs('[data-dots]', carousel);
+    let current = 0;
+    let timer;
+    slides.forEach((_, index) => {
+      const dot = document.createElement('button');
+      dot.type = 'button'; dot.setAttribute('aria-label', `切换到第 ${index + 1} 张`);
+      dot.addEventListener('click', () => show(index));
+      dotsBox.append(dot);
+    });
+    const dots = qsa('button', dotsBox);
+    function show(index) {
+      current = (index + slides.length) % slides.length;
+      slides.forEach((slide, i) => slide.classList.toggle('is-active', i === current));
+      dots.forEach((dot, i) => dot.classList.toggle('active', i === current));
+      clearInterval(timer); timer = setInterval(() => show(current + 1), 6000);
+    }
+    qs('[data-prev]', carousel).addEventListener('click', () => show(current - 1));
+    qs('[data-next]', carousel).addEventListener('click', () => show(current + 1));
+    show(0);
+  }
+
+  // 首页数字增长动画
+  const numberObserver = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+      if (!entry.isIntersecting || entry.target.dataset.done) return;
+      entry.target.dataset.done = 'true';
+      const target = Number(entry.target.dataset.count);
+      const start = performance.now();
+      const update = now => {
+        const progress = Math.min((now - start) / 1100, 1);
+        entry.target.textContent = Math.round(target * (1 - Math.pow(1 - progress, 3))).toLocaleString();
+        if (progress < 1) requestAnimationFrame(update);
+      };
+      requestAnimationFrame(update);
+    });
+  }, { threshold: 0.6 });
+  qsa('[data-count]').forEach(number => numberObserver.observe(number));
+
+  // 活动列表分类筛选
+  const filters = qsa('[data-filter]');
+  if (filters.length) {
+    const cards = qsa('[data-category]');
+    filters.forEach(button => button.addEventListener('click', () => {
+      filters.forEach(item => item.classList.remove('active'));
+      button.classList.add('active');
+      const filter = button.dataset.filter;
+      let visible = 0;
+      cards.forEach(card => {
+        const show = filter === 'all' || card.dataset.category === filter;
+        card.classList.toggle('is-hidden', !show);
+        if (show) visible++;
+      });
+      qs('#activity-count').textContent = visible;
+    }));
+  }
+
+  // 活动详情数据：根据地址中的 id 参数切换内容
+  const activityData = {
+    ai:{tag:'知识讲座',tagClass:'purple',title:'与人工智能共创未来',lead:'理解技术浪潮，也找到属于自己的前进方向。',day:'18',month:'JUL · 2026',time:'7月18日 19:00',location:'图书馆报告厅',host:'信息技术学院学生会',seats:'36',description:'本次讲座邀请人工智能行业导师，以通俗案例介绍生成式人工智能的发展、应用与边界，并分享如何借助新工具提升学习效率、规划职业方向。活动设有现场演示和问答交流环节。'},
+    volunteer:{tag:'公益实践',tagClass:'green',title:'夏日净滩志愿行动',lead:'从校园出发，用双手守护我们共同生活的城市。',day:'20',month:'JUL · 2026',time:'7月20日 08:30',location:'青禾湖公园南门',host:'青年志愿者协会',seats:'42',description:'参与者将在志愿者带领下分组清理水岸垃圾、完成垃圾分类与环境数据记录。现场提供工具和防护手套，活动结束后可获得志愿服务时长证明。'},
+    music:{tag:'文体生活',tagClass:'blue',title:'仲夏校园音乐会',lead:'在晚风与旋律中，收藏一个闪亮的夏夜。',day:'23',month:'JUL · 2026',time:'7月23日 19:30',location:'青年广场露天舞台',host:'大学生艺术团',seats:'120',description:'校园乐队、阿卡贝拉与原创音乐人共同带来一场露天演出。活动免费入场，欢迎带上朋友，在音乐里感受多元、自由而真诚的校园文化。'},
+    maker:{tag:'创新创业',tagClass:'orange',title:'48小时校园创客营',lead:'把灵感变成看得见、摸得着的作品。',day:'26',month:'JUL · 2026',time:'7月26日 09:00',location:'大学生活动中心·创客空间',host:'校团委创新实践部',seats:'28',description:'这是一次面向全校学生的跨专业创新实践。参与者将在导师带领下完成用户观察、创意发散、方案设计、原型制作与成果路演。你不需要提前掌握设计或编程技能，只需带上好奇心和行动力。'},
+    film:{tag:'知识讲座',tagClass:'purple',title:'镜头里的叙事表达',lead:'用一部手机，讲好属于你的校园故事。',day:'29',month:'JUL · 2026',time:'7月29日 14:00',location:'艺术楼 305 教室',host:'影视创作协会',seats:'22',description:'课程从构图、光线、运镜和剪辑节奏展开，结合校园短片案例讲解视觉叙事。参与者将在现场完成分镜练习，并获得老师的一对一点评。'},
+    run:{tag:'文体生活',tagClass:'blue',title:'夜跑与星空观察',lead:'用脚步丈量校园，也抬头看见更远的星光。',day:'02',month:'AUG · 2026',time:'8月2日 19:00',location:'东区操场集合',host:'跑步协会 × 天文社',seats:'54',description:'活动包含热身指导、五公里轻松夜跑和夏季星空观察三个环节。零基础同学也可参加，请穿着舒适运动鞋并根据个人身体状况量力而行。'}
+  };
+  if (document.body.dataset.page === 'detail') {
+    const id = new URLSearchParams(location.search).get('id') || 'maker';
+    const data = activityData[id] || activityData.maker;
+    const set = (selector, value) => { const element = qs(selector); if (element) element.textContent = value; };
+    set('#detail-title',data.title); set('#detail-lead',data.lead); set('#detail-day',data.day); set('#detail-month',data.month);
+    set('#detail-tag',data.tag); set('#detail-description',data.description); set('#detail-time',data.time); set('#detail-location',data.location); set('#detail-host',data.host); set('#detail-seats',data.seats);
+    qs('#detail-tag').className = `tag ${data.tagClass}`;
+    document.title = `${data.title}｜青禾校园`;
+  }
+
+  // 报名弹窗和表单校验（演示项目，不上传数据）
+  const modal = qs('.modal');
+  const closeModal = () => { modal.hidden = true; document.body.style.overflow = ''; };
+  qs('[data-open-modal]')?.addEventListener('click', () => { modal.hidden = false; document.body.style.overflow = 'hidden'; qs('.modal-close').focus(); });
+  qs('.modal-close')?.addEventListener('click', closeModal);
+  qs('[data-close-success]')?.addEventListener('click', closeModal);
+  modal?.addEventListener('click', event => { if (event.target === modal) closeModal(); });
+  document.addEventListener('keydown', event => { if (event.key === 'Escape' && modal && !modal.hidden) closeModal(); });
+  const signupForm = qs('#signup-form');
+  signupForm?.addEventListener('submit', event => {
+    event.preventDefault(); let valid = true;
+    const fields = qsa('input:not([type="checkbox"])', signupForm);
+    fields.forEach(field => {
+      const error = field.nextElementSibling; error.textContent = '';
+      if (!field.value.trim()) { error.textContent = '此项不能为空'; valid = false; }
+      if (field.name === 'phone' && field.value && !/^1\d{10}$/.test(field.value)) { error.textContent = '请输入正确的11位手机号码'; valid = false; }
+    });
+    const consent = qs('[name="consent"]', signupForm);
+    qs('.consent-error').textContent = consent.checked ? '' : '请先阅读并同意参与须知';
+    if (!consent.checked) valid = false;
+    if (valid) { signupForm.hidden = true; qs('.success-state').hidden = false; }
+  });
+
+  // 联系表单校验和反馈
+  const contactForm = qs('#contact-form');
+  contactForm?.addEventListener('submit', event => {
+    event.preventDefault(); let valid = true;
+    qsa('[required]', contactForm).forEach(field => {
+      const error = field.nextElementSibling; if (!error?.classList.contains('error')) return;
+      error.textContent = '';
+      if (!field.value.trim()) { error.textContent = '请填写此项'; valid = false; }
+      if (field.type === 'email' && field.value && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(field.value)) { error.textContent = '请输入正确的邮箱地址'; valid = false; }
+    });
+    const notice = qs('.form-notice');
+    notice.textContent = valid ? '留言已成功提交，感谢你的反馈！' : '';
+    if (valid) contactForm.reset();
+  });
+})();
+
+</script>
+</body></html>
