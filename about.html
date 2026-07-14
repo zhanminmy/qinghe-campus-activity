@@ -249,7 +249,9 @@ button { cursor:pointer; }
 
   const seatKey = id => `qinghe-seats-${id}`;
   const getSeats = (id, fallback) => {
-    const stored = Number(localStorage.getItem(seatKey(id)));
+    const saved = localStorage.getItem(seatKey(id));
+    if (saved === null) return fallback;
+    const stored = Number(saved);
     return Number.isInteger(stored) && stored >= 0 && stored <= activityData[id].capacity ? stored : fallback;
   };
   const updateActivitySeatLabels = () => {
