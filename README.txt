@@ -14,7 +14,8 @@
 
 三、代码目录
 - css/common.css：全站布局、组件、动画和响应式样式。
-- js/main.js：全站交互逻辑与活动数据。
+- js/activities-data.js：六项活动的业务数据。
+- js/main.js：全站交互逻辑与页面渲染。
 - HTML 文件：页面语义结构与具体内容。
 
 四、主要功能
